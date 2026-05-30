@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: syncmusic-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "10000"
+      - key: MONGODB_URI
+        fromDatabase:
+          name: syncmusic
+          property: connectionString
+      - key: ALLOWED_ORIGINS
+        value: https://syncmusic-frontend.vercel.app
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "60000"
+      - key: RATE_LIMIT_MAX
+        value: "100"
+
+databases:
+  - name: syncmusic
+    databaseName: syncmusic
+    user: mongodb
